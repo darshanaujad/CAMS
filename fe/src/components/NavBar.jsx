@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const NavBar = () => {
+export default function NavBar(){
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogin = () => {
@@ -122,4 +122,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar
+

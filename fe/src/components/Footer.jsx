@@ -1,7 +1,9 @@
 import React from 'react'
 import {Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 
-const Footer = () => {
+
+
+export default function Footer () {
   return (
     <div>
             
@@ -139,4 +141,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+
