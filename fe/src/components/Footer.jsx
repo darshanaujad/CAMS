@@ -6,8 +6,7 @@ import {Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'luci
 export default function Footer () {
   return (
     <div>
-            
-      {/* Footer */}
+       {/* Footer */}
       <footer className="bg-gray-900 text-gray-300 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-12 mb-12">
