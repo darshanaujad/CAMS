@@ -5,7 +5,7 @@ const Benefits = () => {
   return (
     <div>
  {/* Why CAMS Section */}
-      <section className="bg-gradient-to-br from-gray-50 to-blue-50 py-20">
+      <section className='bg-gradient-to-br from-gray-50 to-blue-50 py-20'>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="text-center mb-16">
