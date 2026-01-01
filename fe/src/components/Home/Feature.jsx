@@ -3,7 +3,6 @@ import {GraduationCap, UserCheck, Settings, Check} from 'lucide-react'
 
 const Feature = () => {
 
-    
   return (
     <div>
       {/* Features Section */}

@@ -1,10 +1,9 @@
-import react from 'react';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
-import HeroSection from '../components/HeroSection';
-import Feature from '../components/Feature';
-import Benefits from '../components/Benefits';
-import Annoucements from '../components/Annoucements';
+import HeroSection from '../components/Home/HeroSection';
+import Feature from '../components/Home/Feature';
+import Benefits from '../components/Home/Benefits';
+import Annoucements from '../components/Home/Annoucements';
 
 
 export default function Home() {
@@ -16,7 +15,6 @@ export default function Home() {
       <Benefits/>
       <Annoucements/>
       <Footer/>
-    
     </>
      
     

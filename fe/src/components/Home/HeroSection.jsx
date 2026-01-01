@@ -3,9 +3,6 @@ import { Shield, CheckCircle, Users,  } from 'lucide-react';
 
 export default function HeroSection() {
 
-  const handleGetStarted = () => {
-    setShowRegisterModal(true);
-  };
   const handleLearnMore = () => {
     window.location.href = '#features';
   };
@@ -45,10 +42,7 @@ export default function HeroSection() {
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4">
-              <button
-                onClick={handleGetStarted}
-                className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg"
-              >
+              <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg" >
                 Get Started
               </button>
               <button

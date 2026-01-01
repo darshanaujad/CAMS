@@ -2,14 +2,7 @@ import React, { useState } from 'react';
 
 export default function NavBar(){
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const handleLogin = () => {
-    setShowLoginModal(true);
-  };
-
-  const handleRegister = () => {
-    setShowRegisterModal(true);
-  };
+    
   return (
     <div>
       {/* Navigation */}
@@ -60,16 +53,10 @@ export default function NavBar(){
 
             {/* Auth Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <button 
-                onClick={handleLogin}
-                className="text-blue-600 font-semibold hover:text-blue-700 transition"
-              >
+              <button className="text-blue-600 font-semibold hover:text-blue-800 transition">
                 Login
               </button>
-              <button 
-                onClick={handleRegister}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md"
-              >
+              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md">
                 Register
               </button>
             </div>
@@ -101,16 +88,10 @@ export default function NavBar(){
                 Contact
               </a>
               <div className="flex space-x-3 pt-2">
-                <button 
-                  onClick={handleLogin}
-                  className="text-blue-600 font-semibold"
-                >
+                <button  className="text-blue-600 font-semibold">
                   Login
                 </button>
-                <button 
-                  onClick={handleRegister}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold"
-                >
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
                   Register
                 </button>
               </div>
