@@ -8,7 +8,7 @@ const PermissionSchema = new mongoose.Schema(
       unique: true, // e.g. "create_student", "view_marks"
     },
     action: {
-      type: String,
+      type: String,     // THIS IS THE ACTION THEN CAN USER PERFORM 
       enum: [
         "create",
         "view",
@@ -24,7 +24,7 @@ const PermissionSchema = new mongoose.Schema(
     },
     subject: {
         type: String,
-        enum: ['Student', 'Teacher', "HOD", "Super_Admin"],
+        enum: ['Student', 'Teacher', "HOD", "Super_Admin"],  // SUBJECT MEANS WHICH USER CAN PERFORM THAT ACTION 
         required: true,
         trim: true
     },

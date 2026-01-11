@@ -3,9 +3,15 @@ require('./config/db')
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const helmet = require('helmet')
 const PORT = process.env.PORT;
 
-app.use(cors()); // for now allowing every ip but change it later 
+app.use(cors({
+    origin: process.env.CORS_ORIGIN?.split(','),
+    credentials:true
+}));
+
+app.use(helmet());
 
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({extended:true, limit:'50mb'}));

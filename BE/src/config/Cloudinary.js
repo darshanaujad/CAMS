@@ -8,3 +8,6 @@ Cloudinary.config({
 });
 
 module.exports = Cloudinary;
+
+
+// TODO: PLEASE ADD YOUR CREDENTIALS IN THE ENV FOR USING THIS CLOUDINARY 

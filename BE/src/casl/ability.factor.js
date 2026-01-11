@@ -20,3 +20,6 @@ export async function buildAbilityFor(user) {
 
   return build();
 }
+
+
+// TODO: PLEASE READ ABOUT THE CASL AND HOW IT WORKS AND THEN UNDERSTAND THIS CODE 

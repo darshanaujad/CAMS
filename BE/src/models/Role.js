@@ -9,12 +9,12 @@ const RoleSchema = new mongoose.Schema(
     },
     code: {
       type: String,
-      required: true,
+      required: true,   // THIS MUST BE UNIQUE AND ALWAYS IN UPPER CASE LETTER 
       unique: true,
     },
     permissions: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,  // HERE WE HAVE TO ADD THE ID OF PERMISSIONS SO WE CAN SAY THAT THIS ROLE CAN HAVE THIS PERMISSIONS 
         ref: "Permission",
       },
     ],
