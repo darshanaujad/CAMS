@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
+export const RecordStatus = {
+    ACTIVE: 'ACTIVE',
+    INACTIVE: 'INACTIVE',
+    BLOCKED: 'BLOCKED'   
+}
+
 const UserSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true },
@@ -22,8 +28,8 @@ const UserSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["active", "inactive", "blocked"],
-      default: "active",
+      enum: ["ACTIVE", "INACTIVE", "BLOCKED"],
+      default: RecordStatus.ACTIVE,
     },
 
     lastLoginAt: { type: Date },
