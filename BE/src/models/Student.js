@@ -58,7 +58,7 @@ const studentSchema = new mongoose.Schema(
 
     age: {
       type: Number,
-      min: 1,
+      min: 18,
     },
 
     caste: {
@@ -130,21 +130,15 @@ const studentSchema = new mongoose.Schema(
 
     // 🔹 Role & Status
     role: {
-      type: String,
-      enum: ["student", "admin"],
-      default: "student",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Role",
+      required: true,
     },
 
     status: {
       type: String,
       enum: ["active", "inactive", "blocked"],
-      default: "active",
-    },
-
-    // 🔹 Verification
-    isVerified: {
-      type: Boolean,
-      default: false,
+      default: "inactive",
     },
 
     isEmailVerified: {
@@ -153,7 +147,7 @@ const studentSchema = new mongoose.Schema(
     },
 
     // 🔹 Auth & Security
-    lastLogin: {
+    lastLoginAt: {
       type: Date,
     },
 
