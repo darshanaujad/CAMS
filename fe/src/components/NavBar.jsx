@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavBar(){
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const navigate = useNavigate();
     
   return (
     <div>
@@ -56,7 +58,7 @@ export default function NavBar(){
               <button className="text-blue-600 font-semibold hover:text-blue-800 transition">
                 Login
               </button>
-              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md">
+              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md" onClick={() => navigate('/register-student')}>
                 Register
               </button>
             </div>
