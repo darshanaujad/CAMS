@@ -9,6 +9,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+const studentRoutes = require('./routes/student.routes')
+app.use('/api/student' , studentRoutes )
+
 app.get('/', (req, res) => {
     res.send("Server is running");
 });

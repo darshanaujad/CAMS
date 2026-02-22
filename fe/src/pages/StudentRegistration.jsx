@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { CATEGORIES, RELIGIONS , DEPARTMENTS , YEARS , DIAL_CODES } from "../common/constant";
 
+
 // ─── API Function ─────────────────────────────────────────────────────────────
 const registerStudent = async (payload) => {
   const formData = new FormData();
@@ -9,7 +10,7 @@ const registerStudent = async (payload) => {
     if (v !== null && v !== undefined && v !== "") formData.append(k, v);
   });
 
-  const res = await fetch("http://localhost:9000/api/student/register", {
+  const res = await fetch("http://localhost:5000/api/student/register", {
     method: "POST",
     body: formData,
   });
@@ -29,7 +30,7 @@ const INIT_FORM = {
   gender: "", dob: "",
   religion: "", category: "", caste: "",
   department: "", year: "",
-  marksheet10: null, marksheet12: null,
+  SSCMarksheet: null, HSCMarksheet: null,
 };
 
 // ─── Validation ───────────────────────────────────────────────────────────────
@@ -48,8 +49,8 @@ const validate = (f) => {
   if (!f.category) e.category = "Category is required.";
   if (!f.department) e.department = "Department is required.";
   if (!f.year) e.year = "Academic year is required.";
-  if (!f.marksheet10) e.marksheet10 = "10th grade marksheet is required.";
-  if (!f.marksheet12) e.marksheet12 = "12th grade marksheet is required.";
+  if (!f.SSCMarksheet) e.SSCMarksheet = "10th grade marksheet is required.";
+  if (!f.HSCMarksheet) e.HSCMarksheet = "12th grade marksheet is required.";
   return e;
 };
 
@@ -129,8 +130,8 @@ export default function RegistrationForm() {
       caste: form.caste,
       department: form.department,
       year: form.year,
-      marksheet10: form.marksheet10,
-      marksheet12: form.marksheet12,
+      SSCMarksheet: form.SSCMarksheet,
+      HSCMarksheet: form.HSCMarksheet,
     });
   };
 
@@ -143,6 +144,7 @@ export default function RegistrationForm() {
       : "border-gray-300";
 
   return (
+    
     <>
       <link
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:wght@600&display=swap"
@@ -191,7 +193,7 @@ export default function RegistrationForm() {
                   Student Registration
                 </h1>
                 <p className="text-white/50 text-[11px] tracking-widest uppercase mt-0.5">
-                  Academic Enrollment Portal · 2026–27
+                  Academic Enrollment Portal · 2026-27
                 </p>
               </div>
             </div>
@@ -373,13 +375,13 @@ export default function RegistrationForm() {
             <div className="flex flex-col gap-3">
               <UploadRow
                 label="10th Grade Marksheet" required
-                file={form.marksheet10} error={errors.marksheet10}
-                onChange={(e) => handleFile(e, "marksheet10")} id="file10"
+                file={form.SSCMarksheet} error={errors.SSCMarksheet}
+                onChange={(e) => handleFile(e, "SSCMarksheet")} id="file10"
               />
               <UploadRow
                 label="12th Grade Marksheet" required
-                file={form.marksheet12} error={errors.marksheet12}
-                onChange={(e) => handleFile(e, "marksheet12")} id="file12"
+                file={form.HSCMarksheet} error={errors.HSCMarksheet}
+                onChange={(e) => handleFile(e, "HSCMarksheet")} id="file12"
               />
             </div>
           </Section>
@@ -492,3 +494,4 @@ function UploadRow({ label, required, file, error, onChange, id }) {
     </div>
   );
 }
+
