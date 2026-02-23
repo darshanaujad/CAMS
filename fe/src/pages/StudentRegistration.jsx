@@ -1,19 +1,18 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { CATEGORIES, RELIGIONS , DEPARTMENTS , YEARS , DIAL_CODES } from "../common/constant";
-
+import { CATEGORIES, RELIGIONS, DEPARTMENTS, YEARS, DIAL_CODES } from "../common/constant";
+import axios from 'axios';
 
 // ─── API Function ─────────────────────────────────────────────────────────────
 const registerStudent = async (payload) => {
-  const formData = new FormData();
-  Object.entries(payload).forEach(([k, v]) => {
-    if (v !== null && v !== undefined && v !== "") formData.append(k, v);
-  });
 
   const res = await fetch("http://localhost:5000/api/student/register", {
-    method: "POST",
-    body: formData,
-  });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(payload),
+});
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
@@ -93,17 +92,48 @@ export default function RegistrationForm() {
     setErrors((prev) => ({ ...prev, [name]: errs[name] }));
   };
 
-  const handleFile = (e, field) => {
+  const handleFile = async (e, field) => {
     const file = e.target.files[0];
     if (!file) return;
+
     if (!["application/pdf", "image/jpeg", "image/jpg"].includes(file.type)) {
-      return setErrors((prev) => ({ ...prev, [field]: "Only PDF or JPG accepted." }));
+      return setErrors((prev) => ({
+        ...prev,
+        [field]: "Only PDF or JPG accepted.",
+      }));
     }
+
     if (file.size > 5 * 1024 * 1024) {
-      return setErrors((prev) => ({ ...prev, [field]: "File must be under 5MB." }));
+      return setErrors((prev) => ({
+        ...prev,
+        [field]: "File must be under 5MB.",
+      }));
     }
-    setForm((prev) => ({ ...prev, [field]: file }));
-    setErrors((prev) => ({ ...prev, [field]: undefined }));
+
+    try {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", `${import.meta.env.VITE_CLOUDINARY_PRESET_NAME}`);
+      // replace with your preset name
+
+      const res = await axios.post(
+        import.meta.env.VITE_CLOUDINARY_UPLOAD_URL,
+        data 
+      );
+
+      const result = await res.data;
+
+      // store cloudinary url in form
+      setForm((prev) => ({
+        ...prev,
+        [field]: result.secure_url,
+      }));
+
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -140,11 +170,11 @@ export default function RegistrationForm() {
     errors[name]
       ? "border-red-500"
       : touched[name] && !errors[name]
-      ? "border-green-600"
-      : "border-gray-300";
+        ? "border-green-600"
+        : "border-gray-300";
 
   return (
-    
+
     <>
       <link
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:wght@600&display=swap"
@@ -417,7 +447,7 @@ export default function RegistrationForm() {
             >
               Save Draft
             </button>
-            <button 
+            <button
               type="submit"
               className="rf-btn-submit h-9 px-7 text-sm font-semibold text-white bg-[#1d3461] border-none rounded tracking-wide transition-all duration-150 cursor-pointer"
               disabled={mutation.isPending}
