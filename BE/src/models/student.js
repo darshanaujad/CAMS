@@ -8,12 +8,6 @@ const studentSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-    },
     email: {
       type: String,
       required: true,
@@ -90,6 +84,16 @@ const studentSchema = new mongoose.Schema(
     },
     resetTokenExpiry:{
         type:Date,
+    },
+    status:{
+      type:String,
+      enum:["pending" , "approve" , "rejected"],
+      default: "pending",
+    },
+    role:{
+      type:String,
+      enum:["student" , "teacher" , "HOD"],
+      default:"student",
     }
   },
   { timestamps: true }

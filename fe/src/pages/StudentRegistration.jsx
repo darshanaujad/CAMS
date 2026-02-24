@@ -7,12 +7,12 @@ import axios from 'axios';
 const registerStudent = async (payload) => {
 
   const res = await fetch("http://localhost:5000/api/student/register", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify(payload),
-});
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
@@ -24,7 +24,7 @@ const registerStudent = async (payload) => {
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const INIT_FORM = {
-  fullName: "", email: "", username: "",
+  fullName: "", email: "",
   dialCode: "+91 IN", phone: "",
   gender: "", dob: "",
   religion: "", category: "", caste: "",
@@ -38,8 +38,6 @@ const validate = (f) => {
   if (!f.fullName.trim()) e.fullName = "Full name is required.";
   if (!f.email.trim()) e.email = "Email is required.";
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = "Enter a valid email address.";
-  if (!f.username.trim()) e.username = "Username is required.";
-  else if (f.username.length < 4) e.username = "Minimum 4 characters required.";
   if (!f.phone.trim()) e.phone = "Phone number is required.";
   else if (!/^\d{7,15}$/.test(f.phone)) e.phone = "Enter a valid phone number.";
   if (!f.gender) e.gender = "Please select a gender.";
@@ -118,7 +116,7 @@ export default function RegistrationForm() {
 
       const res = await axios.post(
         import.meta.env.VITE_CLOUDINARY_UPLOAD_URL,
-        data 
+        data
       );
 
       const result = await res.data;
@@ -151,7 +149,6 @@ export default function RegistrationForm() {
     mutation.mutate({
       fullName: form.fullName,
       email: form.email,
-      username: form.username,
       phone: `${form.dialCode.split(" ")[0]}${form.phone}`,
       gender: form.gender,
       dob: form.dob,
@@ -272,13 +269,6 @@ export default function RegistrationForm() {
             {/* Row 2 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5 mt-5">
 
-              <FormField label="Username" required error={errors.username}>
-                <input
-                  className={`rf-input w-full h-10 px-3 text-sm bg-[#fafbfc] text-[#1a2535] border rounded transition-all duration-150 ${borderFor("username")}`}
-                  type="text" name="username" placeholder="e.g. priya_2024"
-                  value={form.username} onChange={handleChange} onBlur={handleBlur}
-                />
-              </FormField>
 
               <FormField label="Phone Number" required error={errors.phone}>
                 <div className="flex gap-2">
