@@ -55,10 +55,12 @@ export default function NavBar(){
 
             {/* Auth Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <button className="text-blue-600 font-semibold hover:text-blue-800 transition">
+              <button className="text-blue-600 font-semibold hover:text-blue-800 transition"
+              onClick={() => navigate('/login')}>
                 Login
               </button>
-              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md" onClick={() => navigate('/register-student')}>
+              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md" 
+              onClick={() => navigate('/register-student')}>
                 Register
               </button>
             </div>

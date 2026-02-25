@@ -55,7 +55,7 @@ const studentSchema = new mongoose.Schema(
     },
     addmissionYear:{
         type:String,
-        required:true,
+        required:false,
     },
     SSCMarksheet: {
       type: String, // file path or cloudinary URL

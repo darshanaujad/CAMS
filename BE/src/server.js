@@ -12,6 +12,13 @@ app.use(express.urlencoded({extended:true}));
 const studentRoutes = require('./routes/student.routes')
 app.use('/api/student' , studentRoutes )
 
+const authRoutes = require('./routes/auth.routes');
+app.use('/api/auth', authRoutes);
+
+const adminRoutes = require("./routes/admin.routes");
+app.use("/api/admin", adminRoutes);
+
+
 app.get('/', (req, res) => {
     res.send("Server is running");
 });

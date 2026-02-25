@@ -1,36 +1,60 @@
 const Student = require('../models/student');
+const { ThrowConflictException, ThrowBadRequestException } = require('../utils/httpResponse');
 const { validateRegisterStudent } = require('../utils/validation');
 const bcrypt = require('bcryptjs');
-
-
+const crypto = require('crypto'); // for random password
 
 const registerStudent = async (req, res) => {
   try {
     const data = req.body;
-    const validation = validateRegisterStudent(data);
 
+    // 1️⃣ Validate data
+    const validation = validateRegisterStudent(data);
     if (validation.required) {
-      return res.status(400).json({ message: validation.message });
+      return ThrowBadRequestException(res, validation.message);
     }
 
+    // 2️⃣ Check existing student
     const existingStudent = await Student.findOne({
       $or: [
-        {
-          email: data.email,
-
-        },
-        {
-          phone: data.phone,
-        }
+        { email: data.email },
+        { phone: data.phone }
       ]
     });
-    if(existingStudent){
-      return res.status(409).json({message:"student with phone no or email already exists"});
+
+    if (existingStudent) {
+      return ThrowConflictException(res, "Student with email or phone already exists.");
     }
 
+    // 3️⃣ Generate random password (8 characters)
+    const randomPassword = crypto.randomBytes(4).toString('hex'); 
+    // Example: "a4f9c2d1"
+
+    // 4️⃣ Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(randomPassword, salt);
+
+    // 5️⃣ Create new student
+    const newStudent = new Student({
+      ...data,
+      password: hashedPassword
+    });
+
+    await newStudent.save();
+
+    // 6️⃣ Send response (send plain password only once)
+    return res.status(201).json({
+      success: true,
+      message: "Student registered successfully",
+    });
+
   } catch (error) {
-
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error"
+    });
   }
-}
+};
 
-module.exports = { registerStudent }
+module.exports = { registerStudent };
