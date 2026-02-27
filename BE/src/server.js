@@ -9,13 +9,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-const studentRoutes = require('./routes/student.routes')
-app.use('/api/student' , studentRoutes )
+const studentRoutes = require('../src/routes/student.routes')
+app.use('/api/students' , studentRoutes )
 
-const authRoutes = require('./routes/auth.routes');
+const authRoutes = require('../src/routes/auth.routes');
 app.use('/api/auth', authRoutes);
 
-const adminRoutes = require("./routes/admin.routes");
+const adminRoutes = require("../src/routes/admin.routes");
 app.use("/api/admin", adminRoutes);
 
 

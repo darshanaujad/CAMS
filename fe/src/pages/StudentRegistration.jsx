@@ -6,7 +6,7 @@ import axios from 'axios';
 // ─── API Function ─────────────────────────────────────────────────────────────
 const registerStudent = async (payload) => {
 
-  const res = await fetch("http://localhost:5000/api/student/register", {
+  const res = await fetch("http://localhost:5000/api/students/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

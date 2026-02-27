@@ -1,43 +1,50 @@
-// const Admin = require('../models/admin');
-const Student = require('../models/student');
-// const Teacher = require('../models/teacher');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-
+const Student = require("../models/student");
+const Admin = require("../models/admin"); // if you created admin model
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
   try {
-    console.log("BODY:", req.body); // 👈 ADD THIS
-
     const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "Email and password required"
+    // 🔹 Check Admin First
+    let user = await Admin.findOne({ email });
+
+    if (user) {
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: "Invalid credentials" });
+      }
+
+      const token = jwt.sign(
+        { id: user._id, role: "admin" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1d" }
+      );
+
+      return res.json({
+        success: true,
+        token,
+        role: "admin",
+        name: user.fullName
       });
     }
 
-    let user = await Student.findOne({ email });
-
-    console.log("USER:", user); // 👈 ADD THIS
+    // 🔹 Check Student
+    user = await Student.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found"
-      });
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    if (user.status !== "approved") {
+      return res.status(403).json({ message: "Account not approved yet" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
-    console.log("PASSWORD MATCH:", isMatch); // 👈 ADD THIS
-
     if (!isMatch) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid credentials"
-      });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
     const token = jwt.sign(
@@ -46,17 +53,16 @@ const login = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    return res.status(200).json({
+    res.json({
       success: true,
-      token
+      token,
+      role: "student",
+      name: user.fullName
     });
 
   } catch (error) {
-    console.log("ERROR:", error); // 👈 VERY IMPORTANT
-    return res.status(500).json({
-      success: false,
-      message: "Internal Server Error"
-    });
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

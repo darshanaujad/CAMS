@@ -35,19 +35,24 @@ const registerStudent = async (req, res) => {
     const hashedPassword = await bcrypt.hash(randomPassword, salt);
 
     // 5️⃣ Create new student
-    const newStudent = new Student({
-      ...data,
-      password: hashedPassword
-    });
+   const newStudent = new Student({
+  ...data,
+  password: hashedPassword,
+  status: "pending"
+});
 
-    await newStudent.save();
+await newStudent.save();
 
-    // 6️⃣ Send response (send plain password only once)
-    return res.status(201).json({
-      success: true,
-      message: "Student registered successfully",
-    });
-
+return res.status(201).json({
+  success: true,
+  message: "Student registered successfully",
+  student: {
+    _id: newStudent._id,
+    name: newStudent.fullname,
+    email: newStudent.email,
+    status: newStudent.status
+  }
+});
   } catch (error) {
     console.error(error);
     return res.status(500).json({

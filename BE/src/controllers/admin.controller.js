@@ -50,4 +50,19 @@ const approveStudent = async (req, res) => {
   }
 };
 
-module.exports = { approveStudent };
+const getAllStudents = async (req, res) => {
+  try {
+  
+    const students = await Student.find().select("-password");
+
+    res.status(200).json({
+      success: true,
+      students
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+module.exports = {approveStudent , getAllStudents}
