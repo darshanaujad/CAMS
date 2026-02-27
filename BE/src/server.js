@@ -18,6 +18,9 @@ app.use('/api/auth', authRoutes);
 const adminRoutes = require("../src/routes/admin.routes");
 app.use("/api/admin", adminRoutes);
 
+const teacherRoutes = require("../src/routes/teacher.routes");
+app.use("/api/teachers", teacherRoutes);
+
 
 app.get('/', (req, res) => {
     res.send("Server is running");

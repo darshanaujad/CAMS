@@ -70,6 +70,10 @@ const studentSchema = new mongoose.Schema(
         type:Boolean,
         default:false,     
     },
+    verifiedAt:{
+        type:Date,
+        default:null,
+    },
     isDeleted:{
         type:Boolean,
         default:false,
@@ -92,7 +96,7 @@ const studentSchema = new mongoose.Schema(
     },
     role:{
       type:String,
-      enum:["student" , "teacher" , "HOD"],
+      enum:["student"],
       default:"student",
     }
   },
