@@ -1,7 +1,8 @@
 const Student = require('../models/student');
-const { ThrowConflictException, ThrowBadRequestException } = require('../utils/httpResponse');
+const { ThrowConflictException, ThrowBadRequestException, ThrowNotFoundException } = require('../utils/httpResponse');
 const { validateRegisterStudent } = require('../utils/validation');
 const bcrypt = require('bcryptjs');
+const jwt = require("jsonwebtoken");
 const crypto = require('crypto'); // for random password
 
 const registerStudent = async (req, res) => {
@@ -62,7 +63,7 @@ return res.status(201).json({
   }
 };
 
-exports.login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -79,7 +80,7 @@ exports.login = async (req, res) => {
 
 
     const token = jwt.sign(
-      { id: user._id, role: "admin" },
+      { id: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
@@ -101,4 +102,4 @@ exports.login = async (req, res) => {
   }
 };
 
-module.exports = { registerStudent };
+module.exports = { registerStudent , login};

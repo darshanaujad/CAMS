@@ -2,10 +2,11 @@ const Teacher = require("../models/teacher");
 const bcrypt = require("bcryptjs");
 const { validateRegisterTeacher } = require('../utils/validation');
 const crypto = require('crypto'); // for random password
-const { ThrowBadRequestException } = require("../utils/httpResponse");
+const { ThrowBadRequestException, ThrowNotFoundException } = require("../utils/httpResponse");
 const { generateResetToken } = require("../utils/generateResetToken");
 const { sendEmail } = require("../utils/email/emailService");
 const resetPasswordTemplate = require("../utils/email/resetPasswordTemplate");
+const jwt = require("jsonwebtoken");
 
 // ===============================
 // TEACHER REGISTER CONTROLLER
@@ -27,7 +28,7 @@ exports.registerTeacher = async (req, res) => {
     });
 
     if (existingTeacher) {
-      return res.status(400).json({
+      return res.status(409).json({
         message: "Email or Phone already exists",
       });
     }
@@ -163,13 +164,13 @@ exports.login = async (req, res) => {
     }
 
     if (user.role === "hod") {
-       userpath = '/admin/dashboard'
+       userPath = '/admin/dashboard'
     } else {
        userPath = '/teacher/dashboard'
     }
 
     const token = jwt.sign(
-      { id: user._id, role: "admin" },
+      { id: user._id, role:user.role},
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
@@ -181,9 +182,6 @@ exports.login = async (req, res) => {
       name: user.fullName,
       path: userPath
     });
-
-
-
 
   } catch (error) {
     console.log(error);

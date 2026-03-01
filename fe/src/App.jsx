@@ -5,6 +5,7 @@ import Layout from './layout/Layout'
 import Login from './pages/Login'
 import StudentRegistration from './pages/StudentRegistration'
 import ResetPassword from './pages/Resetpassword'
+import NotFoundPage from './pages/NotFound'
 
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <Route path='/register-student' element={<Layout><StudentRegistration/></Layout>} />
         <Route path='/login' element={<Layout><Login/></Layout>} />
         <Route path='/reset-password' element={<ResetPassword/>} />
+        <Route path='*' element={<NotFoundPage/>}/>
       </Routes>
     </div>
   )

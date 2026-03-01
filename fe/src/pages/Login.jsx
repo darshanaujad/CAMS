@@ -46,11 +46,7 @@ const LockIcon = () => (
   </svg>
 );
 
-const BookIcon = ({ color = "#2B4BF2" }) => (
-  <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke={color} strokeWidth="2.2">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-  </svg>
-);
+
 
 const ArrowRightIcon = () => (
   <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -145,24 +141,15 @@ export default function Login() {
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600/60 to-[#0d1b4b]/85" />
 
           {/* Content */}
-          <div className="relative z-10 flex flex-col justify-between p-10 w-full text-white">
+          <div className="relative z-10 flex flex-col justify-center p-10 w-full text-white">
 
-            {/* Brand */}
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
-                <BookIcon />
-              </div>
-              <span className="font-playfair text-xl font-bold tracking-wide">Bookmark</span>
-            </div>
+
 
             {/* Quote block */}
             <div className="anim-fadeup">
               <blockquote className="font-playfair text-3xl font-semibold leading-snug mb-5 max-w-sm">
-                "A reader lives a thousand lives before he dies."
+                "Empowering Education Through Digital Excellence."
               </blockquote>
-              <cite className="not-italic text-xs opacity-70 tracking-widest uppercase">
-                — George R.R. Martin
-              </cite>
 
               {/* Indicator dots */}
               <div className="flex items-center gap-1.5 mt-6">
@@ -178,29 +165,13 @@ export default function Login() {
             RIGHT — Login Panel (50 %)
         ════════════════════════════════════════ */}
         <div className="anim-slide w-full md:w-1/2 flex flex-col justify-center items-center px-8 py-12 relative overflow-y-auto">
-
-          {/* Top nav */}
-          <nav className="absolute top-6 right-7 flex gap-5 text-xs text-gray-400">
-            <a href="#" className="hover:text-blue-600 transition-colors">Help Center</a>
-            <a href="#" className="hover:text-blue-600 transition-colors">Privacy Policy</a>
-          </nav>
-
           <div className="w-full max-w-sm">
-
-            {/* Mobile-only brand */}
-            <div className="flex items-center gap-2 mb-8 md:hidden">
-              <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center">
-                <BookIcon color="white" />
-              </div>
-              <span className="font-playfair font-bold text-gray-800">Bookmark</span>
-            </div>
-
             {/* Heading */}
             <h1 className="font-playfair text-[2rem] font-bold text-gray-900 mb-1">
-              Welcome Back Reader
+              Welcome Back...
             </h1>
             <p className="text-sm text-gray-500 mb-7">
-              Enter your credentials to access your library.
+              Enter your credentials to login.
             </p>
 
             {/* ── Error banner ── */}
@@ -264,7 +235,7 @@ export default function Login() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="reader@bookmark.com"
+                    placeholder="user@cams.com"
                     required
                     className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl bg-white text-sm text-gray-800 placeholder-gray-400 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                   />
@@ -357,7 +328,7 @@ export default function Login() {
 
             {/* Register link */}
             <p className="text-center text-sm text-gray-500">
-              New to Bookmark?{" "}
+              New Application?{" "}
               <a href="#" className="text-blue-600 font-semibold hover:underline">
                 Create an account
               </a>
