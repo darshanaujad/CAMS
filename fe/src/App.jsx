@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
-import Layout from './layout/layout'
+import Layout from './layout/Layout'
 import Login from './pages/Login'
 import StudentRegistration from './pages/StudentRegistration'
 import ResetPassword from './pages/Resetpassword'
