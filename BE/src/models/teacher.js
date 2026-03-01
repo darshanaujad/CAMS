@@ -7,14 +7,6 @@ const teacherSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-    },
-
     email: {
       type: String,
       required: true,
@@ -41,7 +33,7 @@ const teacherSchema = new mongoose.Schema(
 
     dob: {
       type: Date,
-      required: true,
+      required: false,
     },
 
     department: {
@@ -94,6 +86,13 @@ const teacherSchema = new mongoose.Schema(
     deletedAt:{
         type:Date,
         default:null,
+    },
+    resetPasswordToken:{
+        type:String,
+
+    },
+    resetTokenExpiry:{
+        type:Date,
     },
   },
   { timestamps: true }

@@ -45,7 +45,7 @@ await newStudent.save();
 
 return res.status(201).json({
   success: true,
-  message: "Student registered successfully",
+  message: "Student registered successfully, Wait for admin approval.",
   student: {
     _id: newStudent._id,
     name: newStudent.fullname,

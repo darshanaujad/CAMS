@@ -1,5 +1,4 @@
 const Student = require("../models/student");
-const Admin = require("../models/admin"); // if you created admin model
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 

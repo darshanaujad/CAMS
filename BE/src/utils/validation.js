@@ -29,3 +29,32 @@ exports.validateRegisterStudent = (data) => {
   };
 };
 
+
+exports.validateRegisterTeacher = (data) =>{
+  const requiredFields = [
+    { key: "fullName", message: "Full name is required." },
+    { key: "email", message: "Email is required." },
+    {key : "password" , message: "password is required"},
+    { key: "phone", message: "Phone number is required." },
+    { key: "gender", message: "Gender is required." },
+    { key: "subjects", message: "subjects is required." },
+    { key: "department", message: "Department is required." },
+    { key: "qualification", message: "Qualification  is required." },
+    { key: "experience", message: "experience is required." },
+    
+  ];
+  for (const field of requiredFields) {
+    if (!data[field.key]) {
+      return {
+        required: true,
+        message: field.message,
+      };
+    }
+  }
+
+  return {
+    required: false,
+    message: "All required fields are present.",
+  };
+};
+

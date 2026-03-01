@@ -1,6 +1,6 @@
 const Student = require("../models/student");
 const crypto = require("crypto");
-const sendEmail = require("../utils/sendEmail");
+const sendEmail = require("../utils/email");
 
 const approveStudent = async (req, res) => {
   try {

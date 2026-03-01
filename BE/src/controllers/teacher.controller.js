@@ -1,5 +1,8 @@
 const Teacher = require("../models/teacher");
 const bcrypt = require("bcryptjs");
+const {validateRegisterTeacher} = require('../utils/validation');
+const crypto = require('crypto'); // for random password
+const { ThrowBadRequestException } = require("../utils/httpResponse");
 
 // ===============================
 // TEACHER REGISTER CONTROLLER
@@ -7,23 +10,17 @@ const bcrypt = require("bcryptjs");
 
 exports.registerTeacher = async (req, res) => {
   try {
-    const {
-      fullName,
-      username,
-      email,
-      password,
-      phone,
-      gender,
-      dob,
-      department,
-      subjects,
-      qualification,
-      experience,
-    } = req.body;
+     const data = req.body;
+    // 1) validate teacher
+   const validate = validateRegisterTeacher(data);
+   if(validate.required){
+        return ThrowBadRequestException(res , validate.message);
+   }
 
     // 1️⃣ Check if teacher already exists
     const existingTeacher = await Teacher.findOne({
-      $or: [{ email }, { username }],
+      $or: [{ email: data.email },
+        { phone: data.phone }],
     });
 
     if (existingTeacher) {
@@ -32,24 +29,16 @@ exports.registerTeacher = async (req, res) => {
       });
     }
 
+     const randomPassword = crypto.randomBytes(4).toString('hex'); 
+
     // 2️⃣ Hash Password
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(randomPassword, salt);
 
     // 3️⃣ Create Teacher
     const newTeacher = new Teacher({
-      fullName,
-      username,
-      email,
-      password: hashedPassword,
-      phone,
-      gender,
-      dob,
-      department,
-      subjects,
-      qualification,
-      experience,
-      isApproved: false, // admin approval required
+      ...data,
+      password:hashedPassword ,
     });
 
     await newTeacher.save();
@@ -57,7 +46,7 @@ exports.registerTeacher = async (req, res) => {
     // 4️⃣ Send Response
     res.status(201).json({
       success: true,
-      message: "Teacher registered successfully. Wait for admin approval.",
+      message: "Teacher registered successfully.",
     });
 
   } catch (error) {
