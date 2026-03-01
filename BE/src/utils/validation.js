@@ -34,7 +34,6 @@ exports.validateRegisterTeacher = (data) =>{
   const requiredFields = [
     { key: "fullName", message: "Full name is required." },
     { key: "email", message: "Email is required." },
-    {key : "password" , message: "password is required"},
     { key: "phone", message: "Phone number is required." },
     { key: "gender", message: "Gender is required." },
     { key: "subjects", message: "subjects is required." },

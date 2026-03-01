@@ -1,6 +1,6 @@
 const Student = require("../models/student");
 const crypto = require("crypto");
-const sendEmail = require("../utils/email");
+// const sendEmail = require("../utils/email");
 
 const approveStudent = async (req, res) => {
   try {
@@ -28,16 +28,8 @@ const approveStudent = async (req, res) => {
     // 2️⃣ Create Reset Link
     const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
 
-    // 3️⃣ Send Email
-    await sendEmail(
-      student.email,
-      "Account Approved - Set Your Password",
-      `
-        <h2>Your account has been approved 🎉</h2>
-        <p>Click below to set your password:</p>
-        <a href="${resetLink}">Set Password</a>
-      `
-    );
+
+
 
     res.status(200).json({
       success: true,
@@ -52,7 +44,7 @@ const approveStudent = async (req, res) => {
 
 const getAllStudents = async (req, res) => {
   try {
-  
+
     const students = await Student.find().select("-password");
 
     res.status(200).json({
@@ -65,4 +57,4 @@ const getAllStudents = async (req, res) => {
   }
 };
 
-module.exports = {approveStudent , getAllStudents}
+module.exports = { approveStudent, getAllStudents }

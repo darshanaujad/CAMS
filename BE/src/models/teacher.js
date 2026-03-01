@@ -91,7 +91,7 @@ const teacherSchema = new mongoose.Schema(
         type:String,
 
     },
-    resetTokenExpiry:{
+    resetPasswordExpiry:{
         type:Date,
     },
   },
