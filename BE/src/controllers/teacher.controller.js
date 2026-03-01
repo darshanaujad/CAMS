@@ -60,7 +60,7 @@ exports.registerTeacher = async (req, res) => {
 
     //send email to user
     // 3️⃣ Create reset password link
-    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${base64Token}`;
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${base64Token}&auth=teachers`;
 
     // 4️⃣ Send email (NON-BLOCKING recommended)
     sendEmail({
