@@ -10,13 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 const studentRoutes = require('../src/routes/student.routes')
-app.use('/api/students' , studentRoutes )
-
-const authRoutes = require('../src/routes/auth.routes');
-app.use('/api/auth', authRoutes);
-
-const adminRoutes = require("../src/routes/admin.routes");
-app.use("/api/admin", adminRoutes);
+app.use('/api/students' , studentRoutes );
 
 const teacherRoutes = require("../src/routes/teacher.routes");
 app.use("/api/teachers", teacherRoutes);

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 /* ─── Icon Components ─────────────────────────────────────────── */
 
@@ -67,12 +68,14 @@ const SpinnerIcon = () => (
 /* ─── Main Component ──────────────────────────────────────────── */
 
 export default function Login() {
-  const [email, setEmail]               = useState("");
-  const [password, setPassword]         = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading]           = useState(false);
-  const [error, setError]               = useState("");
-  const [success, setSuccess]           = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loginUser, setLoginUser] = useState("");
+  const navigate = useNavigate();
 
   /* API call to localhost:5000/api/auth/login */
   const handleSubmit = async (e) => {
@@ -87,10 +90,10 @@ export default function Login() {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
-        method:  "POST",
+      const res = await fetch(`http://localhost:5000/api/${loginUser}/login`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
@@ -100,6 +103,7 @@ export default function Login() {
       } else {
         setSuccess("Login successful! Redirecting to your library…");
         if (data.token) localStorage.setItem("token", data.token);
+        navigate(`${data.path}`)
         // TODO: navigate("/dashboard") — add React Router if needed
       }
     } catch {
@@ -221,6 +225,27 @@ export default function Login() {
 
             {/* ── Form ── */}
             <form onSubmit={handleSubmit} noValidate>
+
+              {/* Login As Dropdown */}
+              <div className="mb-4">
+                <label
+                  htmlFor="loginUser"
+                  className="block text-[11px] font-semibold text-gray-600 mb-1.5 tracking-widest uppercase"
+                >
+                  Login As
+                </label>
+
+                <select
+                  id="loginUser"
+                  value={loginUser}
+                  onChange={(e) => setLoginUser(e.target.value)}
+                  required
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-white text-sm text-gray-800 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                >
+                  <option value="students">Student</option>
+                  <option value="teachers">Teacher</option>
+                </select>
+              </div>
 
               {/* Email field */}
               <div className="mb-4">

@@ -144,3 +144,49 @@ exports.resetPassword = async (req, res) => {
     });
   }
 };
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    let userPath = '';
+
+    const user = await Teacher.findOne({ email, isDeleted: false });
+
+    if (!user) {
+        return ThrowNotFoundException(res, "User not found");
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return ThrowBadRequestException(res, "Invalid credentials")
+    }
+
+    if (user.role === "hod") {
+       userpath = '/admin/dashboard'
+    } else {
+       userPath = '/teacher/dashboard'
+    }
+
+    const token = jwt.sign(
+      { id: user._id, role: "admin" },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    return res.json({
+      success: true,
+      token,
+      role: user.role,
+      name: user.fullName,
+      path: userPath
+    });
+
+
+
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
