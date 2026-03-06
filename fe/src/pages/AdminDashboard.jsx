@@ -1,8 +1,11 @@
 import { useState } from "react";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar, Cell, PieChart, Pie
+  BarChart, Cell ,Bar, PieChart, Pie
 } from "recharts";
+import { useNavigate } from "react-router-dom";
+
+
 
 const enrollmentData = [
   { month: "Sep", students: 2480 },
@@ -96,6 +99,7 @@ function TooltipEnroll({ active, payload, label }) {
 export default function AdminDashboard() {
   const [active, setActive] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen flex bg-gray-50" style={{ fontFamily: "'Plus Jakarta Sans','DM Sans',sans-serif" }}>
@@ -152,50 +156,7 @@ export default function AdminDashboard() {
       {/* ── Main ── */}
       <div className="flex-1 flex flex-col min-w-0">
 
-        {/* Navbar */}
-        <header className="sticky top-0 z-10 bg-white border-b border-gray-100 shadow-sm">
-          <div className="flex items-center justify-between px-5 sm:px-8 h-16">
-            <div className="flex items-center gap-3">
-              <button className="lg:hidden p-2 rounded-lg hover:bg-gray-100 text-gray-500"
-                onClick={() => setSidebarOpen(true)}>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                  <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-              </button>
-              <div>
-                <h1 className="text-base font-bold text-gray-900">Dashboard Overview</h1>
-                <p className="text-xs text-gray-400 hidden sm:block">Welcome back, Administrator</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="hidden md:flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 w-56">
-                <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-                </svg>
-                <input className="bg-transparent text-sm text-gray-600 outline-none placeholder-gray-400 w-full" placeholder="Search..."/>
-              </div>
-
-              <button className="relative p-2 rounded-xl hover:bg-gray-100 transition-colors">
-                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-                </svg>
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"/>
-              </button>
-
-              <div className="flex items-center gap-2 cursor-pointer group">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">JA</div>
-                <div className="hidden sm:block">
-                  <p className="text-sm font-semibold text-gray-800 leading-tight">John Anderson</p>
-                  <p className="text-xs text-gray-400">Administrator</p>
-                </div>
-                <svg className="w-4 h-4 text-gray-400 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                  <path strokeLinecap="round" d="M19 9l-7 7-7-7"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </header>
+        
 
         {/* Content */}
         <main className="flex-1 overflow-y-auto px-5 sm:px-8 py-7 space-y-6">
@@ -336,11 +297,12 @@ export default function AdminDashboard() {
             <div className="flex flex-wrap gap-3">
               {[
                 { label: "Approve Students", color: "bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-200", icon: "✓" },
-                { label: "Add New Teacher", color: "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-200", icon: "+" },
+                { label: "Add New Teacher", path: "/admin/admin-dashboard/add-teacher", color: "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-200", icon: "+" },
                 { label: "Create Course", color: "bg-white hover:bg-gray-50 text-gray-700 border border-gray-200", icon: "📖" },
                 { label: "Schedule Class", color: "bg-white hover:bg-gray-50 text-gray-700 border border-gray-200", icon: "📅" },
               ].map((btn, i) => (
-                <button key={i} className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shadow-sm transition-all active:scale-95 ${btn.color}`}>
+                <button key={i} onClick={() => navigate(btn.path)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shadow-sm transition-all active:scale-95 ${btn.color}`}>
                   <span>{btn.icon}</span> {btn.label}
                 </button>
               ))}

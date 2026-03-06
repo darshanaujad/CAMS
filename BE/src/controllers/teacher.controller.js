@@ -164,7 +164,7 @@ exports.login = async (req, res) => {
     }
 
     if (user.role === "hod") {
-       userPath = '/admin/dashboard'
+       userPath = '/admin/admin-dashboard'
     } else {
        userPath = '/teacher/dashboard'
     }
