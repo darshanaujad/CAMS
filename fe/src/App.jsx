@@ -19,9 +19,9 @@ const App = () => {
         <Route path='/login' element={<Layout><Login/></Layout>} />
         <Route path='/reset-password' element={<ResetPassword/>} />
         <Route path='*' element={<NotFoundPage/>}/>
-        <Route path='/admin/admin-dashboard' element={<Layout><AdminDashboard/></Layout>} />
+        <Route path='/admin/dashboard' element={<Layout><AdminDashboard/></Layout>} />
         {/* <Route path='/add-teacher'element={<Layout><AddTeacher/></Layout>}/> */}
-        <Route path="/admin/admin-dashboard/add-teacher" element={<Layout><AddTeacher /></Layout>} />
+        <Route path="/admin/dashboard/add-teacher" element={<Layout><AddTeacher /></Layout>} />
       </Routes>
     </div>
   )
