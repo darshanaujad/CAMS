@@ -297,7 +297,7 @@ export default function AdminDashboard() {
             <div className="flex flex-wrap gap-3">
               {[
                 { label: "Approve Students", color: "bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-200", icon: "✓" },
-                { label: "Add New Teacher", path: "/admin/admin-dashboard/add-teacher", color: "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-200", icon: "+" },
+                { label: "Add New Teacher", path: "/admin/dashboard/add-teacher", color: "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-200", icon: "+" },
                 { label: "Create Course", color: "bg-white hover:bg-gray-50 text-gray-700 border border-gray-200", icon: "📖" },
                 { label: "Schedule Class", color: "bg-white hover:bg-gray-50 text-gray-700 border border-gray-200", icon: "📅" },
               ].map((btn, i) => (
