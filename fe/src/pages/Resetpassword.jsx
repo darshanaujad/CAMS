@@ -58,110 +58,125 @@ const ResetPassword = () => {
   };
 
   return (
-  <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-    
-    <div className="w-full max-w-6xl grid md:grid-cols-2 gap-10 items-center">
-      
-      {/* LEFT SIDE CONTENT */}
-      <div className="hidden md:block">
-        <div className="mb-6">
-          <span className="inline-block bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-medium mr-3">
-            Secure
-          </span>
-          <span className="inline-block bg-purple-100 text-purple-600 px-4 py-1 rounded-full text-sm font-medium">
-            Reliable
-          </span>
-        </div>
+  <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center px-4">
 
-        <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
-          Reset Your Account Password
+    <div className="w-full max-w-5xl grid md:grid-cols-2 bg-white rounded-3xl shadow-2xl overflow-hidden">
+
+      {/* LEFT SECTION */}
+      <div className="hidden md:flex flex-col justify-center bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-12">
+        
+        <h1 className="text-4xl font-bold mb-6">
+          Create a New Password
         </h1>
 
-        <p className="text-gray-600 text-lg">
-          Set a new secure password to continue accessing your 
-          EduFlow College Academic Management System.
+        <p className="text-blue-100 text-lg leading-relaxed mb-10">
+          Your security is important to us. Please choose a strong password 
+          to protect your EduFlow account and continue managing your 
+          academic activities securely.
         </p>
+
+        <div className="space-y-4 text-blue-100">
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 bg-white rounded-full"></span>
+            Minimum 8 characters recommended
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 bg-white rounded-full"></span>
+            Use letters, numbers & symbols
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 bg-white rounded-full"></span>
+            Keep your password private
+          </div>
+        </div>
       </div>
 
-      {/* RIGHT SIDE CARD */}
-      <div className="bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
 
-        <h2 className="text-2xl font-bold text-gray-900 text-center mb-2">
-          Reset Password
-        </h2>
+      {/* RIGHT SECTION */}
+      <div className="p-10">
 
-        <p className="text-gray-500 text-center mb-6 text-sm">
-          Enter your new password below
-        </p>
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-900">
+            Reset Password
+          </h2>
+          <p className="text-gray-500 mt-2 text-sm">
+            Enter your new password below
+          </p>
+        </div>
 
-        <div className="space-y-5">
+        <div className="space-y-6">
 
-          {/* New Password */}
+          {/* NEW PASSWORD */}
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               New Password
             </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                placeholder="Enter new password"
-              />
-            </div>
+
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter new password"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+            />
           </div>
 
-          {/* Confirm Password */}
+
+          {/* CONFIRM PASSWORD */}
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Confirm Password
             </label>
+
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                 placeholder="Confirm password"
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
           </div>
 
-          {/* Submit Button */}
+
+          {/* BUTTON */}
           <button
             onClick={handleResetPassword}
             disabled={loading}
-            className={`w-full ${
-              !loading
-                ? "bg-blue-600 hover:bg-blue-700"
-                : "bg-blue-300"
-            } text-white font-semibold py-3 rounded-lg transition duration-200`}
+            className={`w-full py-3 rounded-xl font-semibold text-white transition ${
+              loading
+                ? "bg-blue-300"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
-            {loading ? "Processing..." : "Reset Password"}
+            {loading ? "Resetting Password..." : "Reset Password"}
           </button>
         </div>
 
-        <div className="text-center mt-6 text-sm text-gray-600">
-          Remembered your password?{" "}
+
+        {/* LOGIN LINK */}
+        <div className="text-center mt-8 text-sm text-gray-600">
+          Remember your password?{" "}
           <span
             onClick={() => navigate("/login")}
-            className="text-blue-600 hover:underline cursor-pointer font-medium"
+            className="text-blue-600 font-semibold hover:underline cursor-pointer"
           >
-            Login
+            Login here
           </span>
         </div>
+
       </div>
     </div>
   </div>
 );
 };
-
 export default ResetPassword ;
