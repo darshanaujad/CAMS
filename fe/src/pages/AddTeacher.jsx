@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axiosInstance from "../lib/axios"; 
 
 const subjects = [
   "Mathematics", "Physics", "Chemistry", "Biology",
@@ -36,11 +37,33 @@ export default function AddTeacher() {
     setSubmitted(false);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-  };
+  
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const teacherData = {
+      ...formData,
+      subjects: selectedSubjects
+    };
+
+    const response = await axiosInstance.post(
+      `${import.meta.env.VITE_API_ENDPOINT}/api/teachers/register`,
+      teacherData
+    );
+
+    if (response.data.success) {
+      setSubmitted(true);
+      handleReset();
+      setTimeout(() => setSubmitted(false), 3000);
+    }
+
+  } catch (error) {
+    console.error("Error:", error.response?.data || error.message);
+    alert(error.response?.data?.message || "Failed to add teacher");
+  }
+};
 
   const inputClass =
     "w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200";
