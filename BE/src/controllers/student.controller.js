@@ -90,7 +90,7 @@ const login = async (req, res) => {
       token,
       role: user.role,
       name: user.fullName,
-      path: '/student/dashboard'
+      path: '/students/dashboard'
     });
 
 

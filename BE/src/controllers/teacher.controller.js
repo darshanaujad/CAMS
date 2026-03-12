@@ -166,7 +166,7 @@ exports.login = async (req, res) => {
     if (user.role === "hod") {
        userPath = '/admin/dashboard'
     } else {
-       userPath = '/teacher/dashboard'
+       userPath = '/teachers/dashboard'
     }
 
     const token = jwt.sign(

@@ -8,6 +8,8 @@ import ResetPassword from './pages/Resetpassword'
 import NotFoundPage from './pages/NotFound'
 import AdminDashboard from './pages/AdminDashboard'
 import AddTeacher from './pages/AddTeacher'
+import StudentDashboard from './pages/StudentDashboard'
+import TeacherDashboard from './pages/TeacherDashboard'
 
 
 const App = () => {
@@ -22,6 +24,8 @@ const App = () => {
         <Route path='/admin/dashboard' element={<Layout><AdminDashboard/></Layout>} />
         {/* <Route path='/add-teacher'element={<Layout><AddTeacher/></Layout>}/> */}
         <Route path="/admin/dashboard/add-teacher" element={<Layout><AddTeacher /></Layout>} />
+        <Route path='/teachers/dashboard' element={<Layout><TeacherDashboard/></Layout>} />
+        <Route path='/students/dashboard' element={<Layout><StudentDashboard/></Layout>} />
       </Routes>
     </div>
   )
