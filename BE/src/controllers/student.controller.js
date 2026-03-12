@@ -56,7 +56,7 @@ const registerStudent = async (req, res) => {
       message: "Student registered successfully, Wait for admin approval.",
       student: {
         _id: newStudent._id,
-        name: newStudent.fullname,
+        name: newStudent.fullName,
         email: newStudent.email,
         status: newStudent.status,
       },
