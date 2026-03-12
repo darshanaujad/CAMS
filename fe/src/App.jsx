@@ -10,6 +10,8 @@ import AdminDashboard from './pages/AdminDashboard'
 import AddTeacher from './pages/AddTeacher'
 import StudentDashboard from './pages/StudentDashboard'
 import TeacherDashboard from './pages/TeacherDashboard'
+import AdminLayout from './layout/AdminLayout'
+import AdminStudent from './pages/AdminStudents'
 
 
 const App = () => {
@@ -21,7 +23,8 @@ const App = () => {
         <Route path='/login' element={<Layout><Login/></Layout>} />
         <Route path='/reset-password' element={<ResetPassword/>} />
         <Route path='*' element={<NotFoundPage/>}/>
-        <Route path='/admin/dashboard' element={<Layout><AdminDashboard/></Layout>} />
+        <Route path='/admin/dashboard' element={<AdminLayout><AdminDashboard/></AdminLayout>} />
+        <Route path='/admin/students' element={<AdminLayout><AdminStudent/></AdminLayout>}/>
         {/* <Route path='/add-teacher'element={<Layout><AddTeacher/></Layout>}/> */}
         <Route path="/admin/dashboard/add-teacher" element={<Layout><AddTeacher /></Layout>} />
         <Route path='/teachers/dashboard' element={<Layout><TeacherDashboard/></Layout>} />

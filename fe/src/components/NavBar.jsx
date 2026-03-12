@@ -39,16 +39,16 @@ export default function NavBar(){
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#home" className="text-gray-700 hover:text-blue-600 font-medium transition">
+              <a href="/" className="text-gray-700 hover:text-blue-600 font-medium transition">
                 Home
               </a>
-              <a href="#features" className="text-gray-700 hover:text-blue-600 font-medium transition">
+              <a href="/features" className="text-gray-700 hover:text-blue-600 font-medium transition">
                 Features
               </a>
-              <a href="#announcements" className="text-gray-700 hover:text-blue-600 font-medium transition">
+              <a href="/announcements" className="text-gray-700 hover:text-blue-600 font-medium transition">
                 Announcements
               </a>
-              <a href="#contact" className="text-gray-700 hover:text-blue-600 font-medium transition">
+              <a href="/contact" className="text-gray-700 hover:text-blue-600 font-medium transition">
                 Contact
               </a>
             </div>
