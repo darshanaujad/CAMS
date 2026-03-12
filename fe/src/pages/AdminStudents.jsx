@@ -140,7 +140,7 @@ export default function AdminStudent() {
               <tr>
                 <th className="px-6 py-3">Name</th>
                 <th className="px-6 py-3">Email</th>
-                <th className="px-6 py-3">Course</th>
+                <th className="px-6 py-3">Department</th>
                 <th className="px-6 py-3">Status</th>
                 <th className="px-6 py-3">Created</th>
                 <th className="px-6 py-3 text-center">Action</th>
@@ -168,7 +168,7 @@ export default function AdminStudent() {
                   <tr key={student._id} className="hover:bg-gray-50">
 
                     <td className="px-6 py-4 font-medium text-gray-800">
-                      {student.name}
+                      {student.fullName}
                     </td>
 
                     <td className="px-6 py-4">
@@ -176,7 +176,7 @@ export default function AdminStudent() {
                     </td>
 
                     <td className="px-6 py-4">
-                      {student.course}
+                      {student.department}
                     </td>
 
                     <td className="px-6 py-4">

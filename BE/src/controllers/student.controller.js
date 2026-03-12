@@ -132,7 +132,7 @@ const findAllStudents = async (req, res) => {
 
       {
         $project: {
-          name: 1,
+          fullName: 1,
           email: 1,
           department: 1,
           status: 1,
