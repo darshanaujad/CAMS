@@ -50,7 +50,7 @@ export default function AdminStudent() {
   const approveStudent = async (id) => {
     try {
 
-      await axios.patch(`/api/students/${id}/approve`);
+      await axiosInstance.patch(`students/approve/${id}`);
 
       fetchStudents();
 

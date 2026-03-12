@@ -8,6 +8,9 @@ const { validateRegisterStudent } = require("../utils/validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto"); // for random password
+const { generateResetToken } = require("../utils/generateResetToken");
+const { sendEmail } = require("../utils/email/emailService");
+const resetPasswordTemplate = require("../utils/email/resetPasswordTemplate");
 
 const registerStudent = async (req, res) => {
   try {
@@ -169,4 +172,106 @@ const findAllStudents = async (req, res) => {
     });
   }
 };
-module.exports = { registerStudent, login, findAllStudents };
+const approveStudent = async (req, res) => {
+
+  try {
+
+    const student = await Student.findById(req.params.id);
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    const { base64Token, hashedToken } = generateResetToken(student.email);
+
+    student.status = "approved";
+    student.resetPasswordToken = hashedToken;
+    student.resetPasswordExpiry = Date.now() + 3600000;
+
+    await student.save();
+
+    const resetLink =
+      `${process.env.FRONTEND_URL}/reset-password?token=${base64Token}&auth=students`;
+
+    // Send Email here
+    // 4️⃣ Send email (NON-BLOCKING recommended)
+        sendEmail({
+          to: student.email,
+          subject: "Set Your Password",
+          html: resetPasswordTemplate({
+            username: student.fullName,
+            resetLink
+          })
+        }).catch(err => {
+          console.error("Email failed:", err.message);
+        });
+
+    res.json({
+      message: "Student approved. Reset link sent.",
+      resetLink
+    });
+
+  } catch (error) {
+    console.log("error is ", error)
+    res.status(500).json({ message: error.message });
+  }
+};
+  const resetPassword = async (req, res) => {
+    try {
+      const { token, newPassword } = req.body;
+  
+      if (!token || !newPassword) {
+        return res.status(400).json({
+          message: "Token and new password are required"
+        });
+      }
+  
+      // Hash incoming token
+      const hashedToken = crypto
+        .createHash("sha256")
+        .update(token)
+        .digest("hex");
+  
+      // Find user with valid token
+      const user = await Student.findOne({
+        resetPasswordToken: hashedToken,
+        resetPasswordExpiry: { $gt: Date.now() }
+      });
+  
+      if (!user) {
+        return res.status(400).json({
+          message: "Invalid or expired reset token"
+        });
+      }
+  
+      // Hash new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+  
+      // Update user
+      user.password = hashedPassword;
+      user.resetPasswordToken = null;
+      user.resetPasswordExpiry = null;
+      user.isVerified = true;
+      user.verifiedAt = new Date();
+     
+      
+  
+      await user.save();
+  
+      res.json({
+        success: true,
+        message: "Password reset successful. You can now login."
+      });
+  
+    } catch (err) {
+      console.log("error is",err)
+      res.status(500).json({
+        message: "Internal server error",
+        error: err.message
+      });
+    }
+  
+
+};
+
+module.exports = { registerStudent, login, findAllStudents , resetPassword , approveStudent};

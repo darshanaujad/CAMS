@@ -49,7 +49,7 @@ const handleSubmit = async (e) => {
     };
 
     const response = await axiosInstance.post(
-      `${import.meta.env.VITE_API_ENDPOINT}/api/teachers/register`,
+      `teachers/register`,
       teacherData
     );
 
