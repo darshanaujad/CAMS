@@ -235,7 +235,7 @@ const approveStudent = async (req, res) => {
       // Find user with valid token
       const user = await Student.findOne({
         resetPasswordToken: hashedToken,
-        resetPasswordExpiry: { $gt: Date.now() }
+        resetTokenExpiry: { $gt: Date.now() }
       });
   
       if (!user) {
@@ -250,7 +250,7 @@ const approveStudent = async (req, res) => {
       // Update user
       user.password = hashedPassword;
       user.resetPasswordToken = null;
-      user.resetPasswordExpiry = null;
+      user.resetTokenExpiry = null;
       user.isVerified = true;
       user.verifiedAt = new Date();
      
