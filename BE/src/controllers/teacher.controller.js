@@ -188,3 +188,79 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+exports.findAllTeachers = async (req, res) => {
+  try {
+
+    let { page = 1, limit = 10, search = "", status } = req.query;
+
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    const skip = (page - 1) * limit;
+
+    const matchStage = {
+      role: "teacher",
+      isDeleted: false
+    };
+
+    if (status) {
+      matchStage.status = status;
+    }
+
+    if (search) {
+      matchStage.$or = [
+        { fullName: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const aggregation = await Teacher.aggregate([
+      { $match: matchStage },
+
+      {
+        $project: {
+          fullName: 1,
+          email: 1,
+          department: 1,
+          status: 1,
+          createdAt: 1,
+        },
+      },
+
+      { $sort: { createdAt: -1 } },
+
+      {
+        $facet: {
+          data: [
+            { $skip: skip },
+            { $limit: limit }
+          ],
+
+          totalCount: [
+            { $count: "count" }
+          ],
+        },
+      },
+    ]);
+
+    const teachers = aggregation[0].data;
+    const totalCount = aggregation[0].totalCount[0]?.count || 0;
+
+    const totalPages = Math.ceil(totalCount / limit);
+
+    res.status(200).json({
+      data: teachers,
+      page,
+      totalPages,
+    });
+
+  } catch (error) {
+
+    console.error("Find teachers error:", error);
+
+    res.status(500).json({
+      message: "Failed to fetch teachers",
+    });
+
+  }
+};
