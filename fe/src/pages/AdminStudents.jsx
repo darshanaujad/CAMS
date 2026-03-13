@@ -4,7 +4,6 @@ import axios from "axios";
 import axiosInstance from "../lib/axios";
 
 export default function AdminStudent() {
-
   const navigate = useNavigate();
 
   const [students, setStudents] = useState([]);
@@ -20,7 +19,6 @@ export default function AdminStudent() {
   // Fetch Students
   const fetchStudents = async () => {
     try {
-
       setLoading(true);
 
       const res = await axiosInstance.get("students", {
@@ -28,13 +26,12 @@ export default function AdminStudent() {
           page,
           limit,
           search,
-          status
-        }
+          status,
+        },
       });
 
       setStudents(res.data.data);
       setTotalPages(res.data.totalPages);
-
     } catch (err) {
       console.error("Error fetching students", err);
     } finally {
@@ -49,11 +46,9 @@ export default function AdminStudent() {
   // Approve student
   const approveStudent = async (id) => {
     try {
-
       await axiosInstance.patch(`students/approve/${id}`);
 
       fetchStudents();
-
     } catch (err) {
       console.error(err);
     }
@@ -62,11 +57,9 @@ export default function AdminStudent() {
   // Reject student
   const rejectStudent = async (id) => {
     try {
-
       await axios.patch(`/api/students/${id}/reject`);
 
       fetchStudents();
-
     } catch (err) {
       console.error(err);
     }
@@ -74,10 +67,8 @@ export default function AdminStudent() {
 
   return (
     <div>
-
       {/* Page Header */}
       <div className="flex items-center justify-between mb-6">
-
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
             Students Management
@@ -94,15 +85,12 @@ export default function AdminStudent() {
         >
           + Add Student
         </button>
-
       </div>
 
       {/* Table Card */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-
         {/* Filters */}
         <div className="p-4 border-b border-gray-100 flex flex-wrap gap-3">
-
           <input
             type="text"
             placeholder="Search by name or email"
@@ -127,16 +115,12 @@ export default function AdminStudent() {
             <option value="APPROVED">Approved</option>
             <option value="REJECTED">Rejected</option>
           </select>
-
         </div>
 
         {/* Table */}
         <div className="overflow-x-auto">
-
           <table className="min-w-full text-sm">
-
             <thead className="bg-gray-50 text-gray-600 text-left">
-
               <tr>
                 <th className="px-6 py-3">Name</th>
                 <th className="px-6 py-3">Email</th>
@@ -145,11 +129,9 @@ export default function AdminStudent() {
                 <th className="px-6 py-3">Created</th>
                 <th className="px-6 py-3 text-center">Action</th>
               </tr>
-
             </thead>
 
             <tbody className="divide-y divide-gray-100">
-
               {loading ? (
                 <tr>
                   <td colSpan="6" className="text-center py-10">
@@ -164,36 +146,28 @@ export default function AdminStudent() {
                 </tr>
               ) : (
                 students?.map((student) => (
-
                   <tr key={student._id} className="hover:bg-gray-50">
-
                     <td className="px-6 py-4 font-medium text-gray-800">
                       {student.fullName}
                     </td>
 
-                    <td className="px-6 py-4">
-                      {student.email}
-                    </td>
+                    <td className="px-6 py-4">{student.email}</td>
+
+                    <td className="px-6 py-4">{student.department}</td>
 
                     <td className="px-6 py-4">
-                      {student.department}
-                    </td>
-
-                    <td className="px-6 py-4">
-
                       <span
                         className={`px-3 py-1 text-xs rounded-full font-semibold
                         ${
                           student.status === "APPROVED"
                             ? "bg-green-100 text-green-600"
                             : student.status === "REJECTED"
-                            ? "bg-red-100 text-red-600"
-                            : "bg-yellow-100 text-yellow-600"
+                              ? "bg-red-100 text-red-600"
+                              : "bg-yellow-100 text-yellow-600"
                         }`}
                       >
                         {student.status}
                       </span>
-
                     </td>
 
                     <td className="px-6 py-4">
@@ -201,43 +175,56 @@ export default function AdminStudent() {
                     </td>
 
                     <td className="px-6 py-4 flex justify-center gap-2">
+                      {student.status === "pending" && (
+                        <>
+                          <button
+                            onClick={() => approveStudent(student._id)}
+                            className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs font-semibold"
+                          >
+                            Approve
+                          </button>
 
-                      <button
-                        onClick={() => approveStudent(student._id)}
-                        className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs font-semibold"
-                      >
-                        Approve
-                      </button>
+                          <button
+                            onClick={() => rejectStudent(student._id)}
+                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs font-semibold"
+                          >
+                            Reject
+                          </button>
+                        </>
+                      )}
 
-                      <button
-                        onClick={() => rejectStudent(student._id)}
-                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs font-semibold"
-                      >
-                        Reject
-                      </button>
+                      {student.status === "approved" && (
+                        <>
+                          <button
+                            onClick={() => editStudent(student._id)}
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs font-semibold"
+                          >
+                            Edit
+                          </button>
 
+                          <button
+                            onClick={() => deleteStudent(student._id)}
+                            className="bg-gray-700 hover:bg-gray-800 text-white px-3 py-1 rounded text-xs font-semibold"
+                          >
+                            Delete
+                          </button>
+                        </>
+                      )}
                     </td>
-
                   </tr>
-
                 ))
               )}
-
             </tbody>
-
           </table>
-
         </div>
 
         {/* Pagination */}
         <div className="flex justify-between items-center p-4 border-t border-gray-100">
-
           <p className="text-sm text-gray-500">
             Page {page} of {totalPages}
           </p>
 
           <div className="flex gap-2">
-
             <button
               disabled={page === 1}
               onClick={() => setPage(page - 1)}
@@ -253,13 +240,9 @@ export default function AdminStudent() {
             >
               Next
             </button>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 }

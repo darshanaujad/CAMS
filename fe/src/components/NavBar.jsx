@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-export default function NavBar(){
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const navigate = useNavigate();
-    
+export default function NavBar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const showAuthButtons =
+    location.pathname === "/" ||
+    location.pathname === "/login" ||
+    location.pathname === "/register-student";
+
   return (
     <div>
       {/* Navigation */}
@@ -14,23 +20,23 @@ export default function NavBar(){
             {/* Logo */}
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center">
-                <svg 
-                  className="w-7 h-7 text-white" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="w-7 h-7 text-white"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M12 14l9-5-9-5-9 5 9 5z" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 14l9-5-9-5-9 5 9 5z"
                   />
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
                   />
                 </svg>
               </div>
@@ -39,39 +45,68 @@ export default function NavBar(){
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="/" className="text-gray-700 hover:text-blue-600 font-medium transition">
+              <a
+                href="/"
+                className="text-gray-700 hover:text-blue-600 font-medium transition"
+              >
                 Home
               </a>
-              <a href="/features" className="text-gray-700 hover:text-blue-600 font-medium transition">
+              <a
+                href="/features"
+                className="text-gray-700 hover:text-blue-600 font-medium transition"
+              >
                 Features
               </a>
-              <a href="/announcements" className="text-gray-700 hover:text-blue-600 font-medium transition">
+              <a
+                href="/announcements"
+                className="text-gray-700 hover:text-blue-600 font-medium transition"
+              >
                 Announcements
               </a>
-              <a href="/contact" className="text-gray-700 hover:text-blue-600 font-medium transition">
+              <a
+                href="/contact"
+                className="text-gray-700 hover:text-blue-600 font-medium transition"
+              >
                 Contact
               </a>
             </div>
 
             {/* Auth Buttons */}
-            <div className="hidden md:flex items-center space-x-4">
-              <button className="text-blue-600 font-semibold hover:text-blue-800 transition"
-              onClick={() => navigate('/login')}>
-                Login
-              </button>
-              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md" 
-              onClick={() => navigate('/register-student')}>
-                Register
-              </button>
-            </div>
+            {showAuthButtons && (
+              <div className="hidden md:flex items-center space-x-4">
+                <button
+                  className="text-blue-600 font-semibold hover:text-blue-800 transition"
+                  onClick={() => navigate("/login")}
+                >
+                  Login
+                </button>
+
+                <button
+                  className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md"
+                  onClick={() => navigate("/register-student")}
+                >
+                  Register
+                </button>
+              </div>
+            )}
 
             {/* Mobile menu button */}
-            <button 
+            <button
               className="md:hidden text-gray-700"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             </button>
           </div>
@@ -79,22 +114,32 @@ export default function NavBar(){
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
             <div className="md:hidden py-4 space-y-3">
-              <a href="#home" className="block text-gray-700 hover:text-blue-600 font-medium">
+              <a
+                href="#home"
+                className="block text-gray-700 hover:text-blue-600 font-medium"
+              >
                 Home
               </a>
-              <a href="#features" className="block text-gray-700 hover:text-blue-600 font-medium">
+              <a
+                href="#features"
+                className="block text-gray-700 hover:text-blue-600 font-medium"
+              >
                 Features
               </a>
-              <a href="#announcements" className="block text-gray-700 hover:text-blue-600 font-medium">
+              <a
+                href="#announcements"
+                className="block text-gray-700 hover:text-blue-600 font-medium"
+              >
                 Announcements
               </a>
-              <a href="#contact" className="block text-gray-700 hover:text-blue-600 font-medium">
+              <a
+                href="#contact"
+                className="block text-gray-700 hover:text-blue-600 font-medium"
+              >
                 Contact
               </a>
               <div className="flex space-x-3 pt-2">
-                <button  className="text-blue-600 font-semibold">
-                  Login
-                </button>
+                <button className="text-blue-600 font-semibold">Login</button>
                 <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
                   Register
                 </button>
@@ -104,8 +149,5 @@ export default function NavBar(){
         </div>
       </nav>
     </div>
-    
-  )
+  );
 }
-
-
