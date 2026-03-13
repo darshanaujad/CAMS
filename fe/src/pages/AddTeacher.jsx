@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../lib/axios"; 
+import { useNavigate } from "react-router-dom";
 
 const subjects = [
   "Mathematics", "Physics", "Chemistry", "Biology",
@@ -20,6 +21,7 @@ export default function AddTeacher() {
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [subjectDropdownOpen, setSubjectDropdownOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -56,7 +58,7 @@ const handleSubmit = async (e) => {
     if (response.data.success) {
       setSubmitted(true);
       handleReset();
-      setTimeout(() => setSubmitted(false), 3000);
+      navigate('/admin/teachers');
     }
 
   } catch (error) {

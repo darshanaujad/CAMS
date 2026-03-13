@@ -186,7 +186,7 @@ const approveStudent = async (req, res) => {
 
     student.status = "approved";
     student.resetPasswordToken = hashedToken;
-    student.resetPasswordExpiry = Date.now() + 3600000;
+    student.resetTokenExpiry = Date.now() + 3600000;
 
     await student.save();
 

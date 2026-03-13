@@ -70,7 +70,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [loginUser, setLoginUser] = useState("");
+  const [loginUser, setLoginUser] = useState("students");
   const navigate = useNavigate();
 
   /* API call to localhost:5000/api/auth/login */
