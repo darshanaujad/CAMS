@@ -131,7 +131,7 @@ export default function Footer () {
           {/* Copyright */}
           <div className="border-t border-gray-800 pt-8 text-center">
             <p className="text-gray-400">
-              © 2024 College Academic Management System. All rights reserved.
+              © 2026 College Academic Management System. All rights reserved.
             </p>
           </div>
         </div>
